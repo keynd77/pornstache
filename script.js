@@ -40,14 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const letter = document.createElement('span');
             letter.textContent = textContent[i];
             letter.classList.add('audio-letter');
-            letter.style.position = 'absolute';
-            // Spread letters more across the screen
-            letter.style.left = `${20 + (i * 12)}%`;
-            letter.style.top = `${30 + Math.random() * 40}%`;
-            letter.style.fontSize = `${2.5 + Math.random() * 3}rem`;
+            letter.style.position = 'fixed'; // Use fixed positioning for full screen spread
+            // Much more diverse positioning across the entire screen
+            letter.style.left = `${10 + Math.random() * 80}%`; // Random horizontal spread
+            letter.style.top = `${10 + Math.random() * 80}%`; // Random vertical spread
+            letter.style.fontSize = `${2 + Math.random() * 4}rem`; // More size variation
             letter.style.zIndex = 10 + i;
-            // Add initial random rotation and scale
-            letter.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 1})`;
+            // Add initial random rotation, scale, and position offset
+            letter.style.transform = `
+                rotate(${Math.random() * 360}deg) 
+                scale(${0.3 + Math.random() * 1.5})
+                translateX(${Math.random() * 200 - 100}px)
+                translateY(${Math.random() * 200 - 100}px)
+            `;
             text.appendChild(letter);
         }
         
@@ -174,47 +179,54 @@ class AudioSync {
             blur(${intensity * 0.5}px)
         `;
         
-        // Enhanced animate each letter individually to the beat
+        // EXTREME animate each letter individually to the beat with full screen movement
         const letters = this.text.querySelectorAll('.audio-letter');
         letters.forEach((letter, index) => {
-            const letterIntensity = intensity * (0.4 + Math.random() * 1.0);
-            const letterEnergy = energy * (0.5 + Math.random() * 0.8);
-            const letterBpm = bpm * (0.6 + Math.random() * 0.8);
+            const letterIntensity = intensity * (0.3 + Math.random() * 1.4);
+            const letterEnergy = energy * (0.4 + Math.random() * 1.2);
+            const letterBpm = bpm * (0.5 + Math.random() * 1.0);
             
-            // Create more dynamic movement patterns
-            const beatWave = Math.sin(currentTime * (6 + index * 1.5)) * letterIntensity * 80;
-            const beatBounce = Math.cos(currentTime * (8 + index * 2)) * letterEnergy * 60;
-            const beatSway = Math.sin(currentTime * letterBpm * 0.15) * letterIntensity * 100;
-            const beatSpin = Math.cos(currentTime * (12 + index * 3)) * letterIntensity * 180;
-            const beatPulse = Math.sin(currentTime * (10 + index * 1.2)) * letterIntensity * 0.8;
+            // Create EXTREME movement patterns that use the full screen
+            const beatWave = Math.sin(currentTime * (4 + index * 1.2)) * letterIntensity * 150;
+            const beatBounce = Math.cos(currentTime * (6 + index * 1.8)) * letterEnergy * 120;
+            const beatSway = Math.sin(currentTime * letterBpm * 0.2) * letterIntensity * 200;
+            const beatSpin = Math.cos(currentTime * (8 + index * 2.5)) * letterIntensity * 720;
+            const beatPulse = Math.sin(currentTime * (8 + index * 1.5)) * letterIntensity * 1.5;
+            const beatWiggle = Math.sin(currentTime * (12 + index * 3)) * letterIntensity * 100;
+            const beatFloat = Math.cos(currentTime * (10 + index * 2.2)) * letterEnergy * 80;
             
-            // Enhanced individual letter animation with more movement
+            // EXTREME individual letter animation with full screen movement
             letter.style.transform = `
-                scale(${0.4 + letterIntensity * 1.6 + beatPulse}) 
-                rotate(${letterIntensity * 360 + beatSpin}deg)
-                translateY(${-letterEnergy * 100 + beatWave + beatBounce}px)
-                translateX(${beatSway + Math.sin(currentTime * 4 + index) * letterIntensity * 80}px)
-                skew(${Math.sin(currentTime * 8 + index) * letterIntensity * 30}deg, ${Math.cos(currentTime * 6 + index) * letterIntensity * 25}deg)
+                scale(${0.2 + letterIntensity * 2.5 + beatPulse}) 
+                rotate(${letterIntensity * 720 + beatSpin}deg)
+                translateY(${-letterEnergy * 200 + beatWave + beatBounce + beatFloat}px)
+                translateX(${beatSway + beatWiggle + Math.sin(currentTime * 3 + index) * letterIntensity * 150}px)
+                skew(${Math.sin(currentTime * 6 + index) * letterIntensity * 45}deg, ${Math.cos(currentTime * 5 + index) * letterIntensity * 35}deg)
             `;
             
-            // Enhanced individual letter colors and effects that respond to the beat
-            const beatHue = Math.sin(currentTime * (15 + index * 2)) * 60;
-            const letterHue = (colorIntensity + index * 45 + currentTime * 80 + beatHue) % 360;
-            const letterSaturation = 70 + letterIntensity * 25 + Math.sin(currentTime * 12) * 15;
-            const letterLightness = 35 + letterEnergy * 30 + Math.cos(currentTime * 8) * 20;
+            // EXTREME individual letter colors and effects that react dramatically to the beat
+            const beatHue = Math.sin(currentTime * (20 + index * 3)) * 120;
+            const beatSaturation = Math.sin(currentTime * (18 + index * 2)) * letterIntensity * 40;
+            const beatBrightness = Math.cos(currentTime * (16 + index * 2.5)) * letterEnergy * 30;
+            const letterHue = (colorIntensity + index * 60 + currentTime * 120 + beatHue) % 360;
+            const letterSaturation = 80 + letterIntensity * 30 + beatSaturation;
+            const letterLightness = 25 + letterEnergy * 40 + beatBrightness;
             
             letter.style.color = `hsl(${letterHue}, ${letterSaturation}%, ${letterLightness}%)`;
             letter.style.textShadow = `
-                0 0 ${15 + letterIntensity * 30}px hsl(${letterHue}, 100%, 80%),
-                0 0 ${25 + letterIntensity * 40}px hsl(${(letterHue + 120) % 360}, 100%, 60%),
-                0 0 ${35 + letterIntensity * 50}px hsl(${(letterHue + 240) % 360}, 100%, 40%),
-                0 0 ${45 + letterIntensity * 60}px hsl(${(letterHue + 180) % 360}, 100%, 20%)
+                0 0 ${20 + letterIntensity * 50}px hsl(${letterHue}, 100%, 90%),
+                0 0 ${35 + letterIntensity * 60}px hsl(${(letterHue + 120) % 360}, 100%, 70%),
+                0 0 ${50 + letterIntensity * 70}px hsl(${(letterHue + 240) % 360}, 100%, 50%),
+                0 0 ${65 + letterIntensity * 80}px hsl(${(letterHue + 180) % 360}, 100%, 30%),
+                0 0 ${80 + letterIntensity * 90}px hsl(${(letterHue + 60) % 360}, 100%, 10%)
             `;
             letter.style.filter = `
-                hue-rotate(${letterIntensity * 240 + beatHue}deg)
-                saturate(${1.2 + letterIntensity * 2})
-                brightness(${0.6 + letterEnergy * 1.2})
-                contrast(${1 + letterIntensity * 0.5})
+                hue-rotate(${letterIntensity * 360 + beatHue}deg)
+                saturate(${1.5 + letterIntensity * 3})
+                brightness(${0.4 + letterEnergy * 1.8})
+                contrast(${1.2 + letterIntensity * 0.8})
+                blur(${letterIntensity * 1}px)
+                drop-shadow(0 0 ${10 + letterIntensity * 20}px hsl(${letterHue}, 100%, 50%))
             `;
         });
         
