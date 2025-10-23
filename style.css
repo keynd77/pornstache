@@ -49,9 +49,9 @@ body {
 
 /* Disco Button */
 .disco-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
     background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
     background-size: 300% 300%;
     border: none;
@@ -60,11 +60,14 @@ body {
     height: 60px;
     font-size: 24px;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 10000 !important;
     animation: discoGradient 2s ease infinite;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
     transform: none !important;
+    /* Ensure button is completely isolated from any parent animations */
+    will-change: auto;
+    isolation: isolate;
 }
 
 .disco-button:hover {
