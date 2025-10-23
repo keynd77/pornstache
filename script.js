@@ -41,12 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
             letter.textContent = textContent[i];
             letter.classList.add('audio-letter');
             letter.style.position = 'absolute';
-            // Keep letters in perfect horizontal order
-            letter.style.left = `${40 + (i * 5.5)}%`; // Perfect horizontal spacing for "pornstache"
+            // Spread letters with proper margins for readability
+            letter.style.left = `${20 + (i * 7)}%`; // Wider spacing with margins between letters
             letter.style.top = `${50}%`; // Fixed vertical position
             letter.style.fontSize = `${3.5}rem`; // Consistent size
             letter.style.zIndex = 10 + i;
-            // No initial transform - letters start in perfect order
+            letter.style.marginRight = `10px`; // Add margin between letters
+            // No initial transform - letters start in readable order
             letter.style.transform = `translate(0, 0)`;
             text.appendChild(letter);
         }
@@ -188,24 +189,24 @@ class AudioSync {
             blur(${intensity * 0.5}px)
         `;
         
-        // Constrained animate each letter individually to keep word in perfect order
+        // Animate each letter individually to the music while keeping them readable
         const letters = this.text.querySelectorAll('.audio-letter');
         letters.forEach((letter, index) => {
             // Pre-calculate values to reduce computation
-            const letterIntensity = intensity * (0.2 + index * 0.02);
-            const letterEnergy = energy * (0.3 + index * 0.02);
-            const timeOffset = currentTime + index * 0.2;
+            const letterIntensity = intensity * (0.4 + index * 0.05);
+            const letterEnergy = energy * (0.5 + index * 0.03);
+            const timeOffset = currentTime + index * 0.3;
             
-            // Very constrained movement patterns that maintain word order
-            const beatWave = Math.sin(timeOffset * 3) * letterIntensity * 8; // Tiny movement
-            const beatBounce = Math.cos(timeOffset * 4) * letterEnergy * 5; // Tiny bounce
-            const beatSway = Math.sin(timeOffset * 2) * letterIntensity * 10; // Tiny sway
-            const beatSpin = Math.cos(timeOffset * 3) * letterIntensity * 8; // Tiny rotation
-            const beatPulse = Math.sin(timeOffset * 5) * letterIntensity * 0.1; // Tiny pulse
+            // Music-responsive movement patterns that keep letters readable
+            const beatWave = Math.sin(timeOffset * 4) * letterIntensity * 25; // Moderate movement
+            const beatBounce = Math.cos(timeOffset * 6) * letterEnergy * 20; // Moderate bounce
+            const beatSway = Math.sin(timeOffset * 3) * letterIntensity * 30; // Moderate sway
+            const beatSpin = Math.cos(timeOffset * 5) * letterIntensity * 20; // Moderate rotation
+            const beatPulse = Math.sin(timeOffset * 8) * letterIntensity * 0.3; // Moderate pulse
             
-            // Constrained transform that maintains perfect word order
+            // Music-responsive transform that maintains readability
             letter.style.transform = `
-                scale(${0.95 + letterIntensity * 0.2 + beatPulse}) 
+                scale(${0.9 + letterIntensity * 0.4 + beatPulse}) 
                 rotate(${beatSpin}deg)
                 translateY(${beatWave + beatBounce}px)
                 translateX(${beatSway}px)
