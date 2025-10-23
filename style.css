@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    font-family: 'Bitcount Grid Single', monospace;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.centered-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    width: clamp(400px, 95vw, 1000px);
+}
+
+.centered-text {
+    font-family: 'Bitcount Grid Single', monospace;
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 400;
+    color: black;
+    text-align: center;
+    transform: translateY(-200px);
+    z-index: 10;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .centered-text {
+        transform: translateY(-110px);
+    }
+}
+
+/* Disco Button */
+.disco-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 300% 300%;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    animation: discoGradient 2s ease infinite;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    transform: none !important;
+}
+
+.disco-button:hover {
+    transform: scale(1.1);
+}
+
+
+/* Disco Background */
+.disco-background {
+    animation: discoFlash 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes discoFlash {
+    0% { background-color: #ff0000; }
+    10% { background-color: #ff8000; }
+    20% { background-color: #ffff00; }
+    30% { background-color: #80ff00; }
+    40% { background-color: #00ff00; }
+    50% { background-color: #00ff80; }
+    60% { background-color: #00ffff; }
+    70% { background-color: #0080ff; }
+    80% { background-color: #0000ff; }
+    90% { background-color: #8000ff; }
+    100% { background-color: #ff0080; }
+}
+
+/* Disco Letters */
+.disco-letter {
+    display: inline-block;
+    animation: discoLetter 1s ease-in-out infinite alternate;
+    transform-origin: center;
+}
+
+@keyframes discoLetter {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        color: #ff0000;
+    }
+    25% {
+        transform: translateY(-20px) rotate(90deg) scale(1.2);
+        color: #00ff00;
+    }
+    50% {
+        transform: translateY(-40px) rotate(180deg) scale(0.8);
+        color: #0000ff;
+    }
+    75% {
+        transform: translateY(-20px) rotate(270deg) scale(1.1);
+        color: #ffff00;
+    }
+    100% {
+        transform: translateY(0) rotate(360deg) scale(1);
+        color: #ff00ff;
+    }
+}
+
+/* Crazy Letter Float */
+@keyframes crazyLetterFloat {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1) skew(0deg);
+        color: #ff0000;
+        text-shadow: 0 0 10px #ff0000;
+    }
+    10% {
+        transform: translate(30px, -20px) rotate(36deg) scale(1.3) skew(10deg);
+        color: #ff8000;
+        text-shadow: 0 0 15px #ff8000;
+    }
+    20% {
+        transform: translate(-20px, -40px) rotate(72deg) scale(0.7) skew(-15deg);
+        color: #ffff00;
+        text-shadow: 0 0 20px #ffff00;
+    }
+    30% {
+        transform: translate(50px, -15px) rotate(108deg) scale(1.5) skew(20deg);
+        color: #80ff00;
+        text-shadow: 0 0 25px #80ff00;
+    }
+    40% {
+        transform: translate(-30px, -50px) rotate(144deg) scale(0.5) skew(-25deg);
+        color: #00ff00;
+        text-shadow: 0 0 30px #00ff00;
+    }
+    50% {
+        transform: translate(60px, -25px) rotate(180deg) scale(1.8) skew(30deg);
+        color: #00ff80;
+        text-shadow: 0 0 35px #00ff80;
+    }
+    60% {
+        transform: translate(-40px, -60px) rotate(216deg) scale(0.3) skew(-30deg);
+        color: #00ffff;
+        text-shadow: 0 0 40px #00ffff;
+    }
+    70% {
+        transform: translate(70px, -35px) rotate(252deg) scale(2) skew(35deg);
+        color: #0080ff;
+        text-shadow: 0 0 45px #0080ff;
+    }
+    80% {
+        transform: translate(-50px, -70px) rotate(288deg) scale(0.2) skew(-35deg);
+        color: #0000ff;
+        text-shadow: 0 0 50px #0000ff;
+    }
+    90% {
+        transform: translate(80px, -45px) rotate(324deg) scale(2.2) skew(40deg);
+        color: #8000ff;
+        text-shadow: 0 0 55px #8000ff;
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1) skew(0deg);
+        color: #ff00ff;
+        text-shadow: 0 0 60px #ff00ff;
+    }
+}
+
+/* Disco Images */
+.disco-image {
+    animation: crazyFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes crazyFloat {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1) skew(0deg);
+        filter: hue-rotate(0deg) saturate(1) brightness(1);
+    }
+    10% {
+        transform: translate(20px, -15px) rotate(36deg) scale(1.2) skew(8deg);
+        filter: hue-rotate(36deg) saturate(2) brightness(1.2);
+    }
+    20% {
+        transform: translate(-15px, -25px) rotate(72deg) scale(0.8) skew(-10deg);
+        filter: hue-rotate(72deg) saturate(3) brightness(0.8);
+    }
+    30% {
+        transform: translate(30px, -10px) rotate(108deg) scale(1.3) skew(12deg);
+        filter: hue-rotate(108deg) saturate(4) brightness(1.5);
+    }
+    40% {
+        transform: translate(-25px, -35px) rotate(144deg) scale(0.6) skew(-15deg);
+        filter: hue-rotate(144deg) saturate(5) brightness(0.6);
+    }
+    50% {
+        transform: translate(40px, -20px) rotate(180deg) scale(1.4) skew(18deg);
+        filter: hue-rotate(180deg) saturate(6) brightness(1.8);
+    }
+    60% {
+        transform: translate(-30px, -40px) rotate(216deg) scale(0.5) skew(-20deg);
+        filter: hue-rotate(216deg) saturate(7) brightness(0.4);
+    }
+    70% {
+        transform: translate(50px, -25px) rotate(252deg) scale(1.5) skew(22deg);
+        filter: hue-rotate(252deg) saturate(8) brightness(2);
+    }
+    80% {
+        transform: translate(-35px, -45px) rotate(288deg) scale(0.4) skew(-25deg);
+        filter: hue-rotate(288deg) saturate(9) brightness(0.2);
+    }
+    90% {
+        transform: translate(60px, -30px) rotate(324deg) scale(1.6) skew(28deg);
+        filter: hue-rotate(324deg) saturate(10) brightness(2.5);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1) skew(0deg);
+        filter: hue-rotate(360deg) saturate(1) brightness(1);
+    }
+}
+
+/* Disco Spin */
+.disco-spin {
+    animation: discoSpin 1s linear infinite;
+}
+
+@keyframes discoSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(1.1); }
+    50% { transform: rotate(180deg) scale(0.9); }
+    75% { transform: rotate(270deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Disco Container */
+.disco-container {
+    animation: discoContainer 2s ease-in-out infinite alternate;
+}
+
+@keyframes discoContainer {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Disco Gradient */
+@keyframes discoGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
