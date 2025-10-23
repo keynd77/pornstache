@@ -146,85 +146,85 @@ class AudioSync {
         const rhythmSpeed = beat.rhythm_speed;
         const currentTime = this.audioPlayer.currentTime;
         
-        // Calculate CRAZY animation intensity based on beat data
-        const scaleIntensity = 0.5 + (intensity * 2.5); // Much more extreme scaling
-        const rotationIntensity = intensity * 1440 + Math.sin(currentTime * 20) * 360; // Insane rotation
-        const colorIntensity = intensity * 400;
-        const crazyWave = Math.sin(currentTime * 15) * intensity * 100;
-        const crazyBounce = Math.cos(currentTime * 25) * intensity * 80;
+        // Calculate moderate animation intensity based on beat data
+        const scaleIntensity = 0.8 + (intensity * 1.2); // More moderate scaling
+        const rotationIntensity = intensity * 180 + Math.sin(currentTime * 10) * 90; // Moderate rotation
+        const colorIntensity = intensity * 200;
+        const crazyWave = Math.sin(currentTime * 8) * intensity * 40;
+        const crazyBounce = Math.cos(currentTime * 12) * intensity * 30;
         
-        // CRAZY mustache animation
+        // Moderate mustache animation
         this.image.style.transform = `
             scale(${scaleIntensity}) 
             rotate(${rotationIntensity}deg) 
-            translateY(${-intensity * 200 + crazyBounce}px)
-            translateX(${Math.sin(currentTime * 20) * intensity * 150 + crazyWave}px)
-            skew(${Math.sin(currentTime * 30) * intensity * 45}deg, ${Math.cos(currentTime * 35) * intensity * 30}deg)
+            translateY(${-intensity * 80 + crazyBounce}px)
+            translateX(${Math.sin(currentTime * 10) * intensity * 60 + crazyWave}px)
+            skew(${Math.sin(currentTime * 15) * intensity * 15}deg, ${Math.cos(currentTime * 18) * intensity * 10}deg)
         `;
         
-        // INSANE color effects to image
+        // Moderate color effects to image
         this.image.style.filter = `
-            hue-rotate(${colorIntensity + Math.sin(currentTime * 40) * 180}deg) 
-            saturate(${2 + intensity * 5}) 
-            brightness(${0.5 + intensity * 2})
-            contrast(${1 + intensity * 1.5})
-            blur(${intensity * 2}px)
+            hue-rotate(${colorIntensity + Math.sin(currentTime * 20) * 90}deg) 
+            saturate(${1.5 + intensity * 2}) 
+            brightness(${0.8 + intensity * 0.8})
+            contrast(${1 + intensity * 0.5})
+            blur(${intensity * 0.5}px)
         `;
         
-        // CRAZY animate each letter individually
+        // Moderate animate each letter individually
         const letters = this.text.querySelectorAll('.audio-letter');
         letters.forEach((letter, index) => {
-            const letterIntensity = intensity * (0.3 + Math.random() * 1.2);
-            const letterEnergy = energy * (0.5 + Math.random() * 1.0);
-            const letterBpm = bpm * (0.5 + Math.random() * 1.0);
-            const letterWave = Math.sin(currentTime * (15 + index * 3)) * letterIntensity * 120;
-            const letterSpin = Math.cos(currentTime * (20 + index * 5)) * letterIntensity * 360;
+            const letterIntensity = intensity * (0.5 + Math.random() * 0.8);
+            const letterEnergy = energy * (0.6 + Math.random() * 0.6);
+            const letterBpm = bpm * (0.7 + Math.random() * 0.6);
+            const letterWave = Math.sin(currentTime * (8 + index * 2)) * letterIntensity * 40;
+            const letterSpin = Math.cos(currentTime * (10 + index * 3)) * letterIntensity * 90;
             
-            // INSANE individual letter animation
+            // Moderate individual letter animation
             letter.style.transform = `
-                scale(${0.3 + letterIntensity * 2.5}) 
-                rotate(${letterIntensity * 720 + letterSpin}deg)
-                translateY(${-letterEnergy * 200 + letterWave}px)
-                translateX(${Math.sin(currentTime * letterBpm * 0.2) * letterIntensity * 200 + Math.cos(currentTime * 12) * 100}px)
-                skew(${Math.sin(currentTime * 25 + index) * letterIntensity * 60}deg, ${Math.cos(currentTime * 18 + index) * letterIntensity * 40}deg)
+                scale(${0.6 + letterIntensity * 1.2}) 
+                rotate(${letterIntensity * 180 + letterSpin}deg)
+                translateY(${-letterEnergy * 60 + letterWave}px)
+                translateX(${Math.sin(currentTime * letterBpm * 0.1) * letterIntensity * 60 + Math.cos(currentTime * 6) * 30}px)
+                skew(${Math.sin(currentTime * 12 + index) * letterIntensity * 20}deg, ${Math.cos(currentTime * 9 + index) * letterIntensity * 15}deg)
             `;
             
-            // CRAZY individual letter colors and effects
-            const letterHue = (colorIntensity + index * 72 + currentTime * 100 + Math.sin(currentTime * 50) * 180) % 360;
-            const letterSaturation = 70 + letterIntensity * 30;
-            const letterLightness = 30 + letterEnergy * 40;
+            // Moderate individual letter colors and effects
+            const letterHue = (colorIntensity + index * 36 + currentTime * 50 + Math.sin(currentTime * 25) * 90) % 360;
+            const letterSaturation = 60 + letterIntensity * 20;
+            const letterLightness = 40 + letterEnergy * 25;
             
             letter.style.color = `hsl(${letterHue}, ${letterSaturation}%, ${letterLightness}%)`;
             letter.style.textShadow = `
-                0 0 ${20 + letterIntensity * 40}px hsl(${letterHue}, 100%, 70%),
-                0 0 ${40 + letterIntensity * 60}px hsl(${(letterHue + 120) % 360}, 100%, 50%),
-                0 0 ${60 + letterIntensity * 80}px hsl(${(letterHue + 240) % 360}, 100%, 30%)
+                0 0 ${10 + letterIntensity * 20}px hsl(${letterHue}, 100%, 70%),
+                0 0 ${20 + letterIntensity * 30}px hsl(${(letterHue + 120) % 360}, 100%, 50%),
+                0 0 ${30 + letterIntensity * 40}px hsl(${(letterHue + 240) % 360}, 100%, 30%)
             `;
             letter.style.filter = `
-                hue-rotate(${letterIntensity * 360}deg)
-                saturate(${1 + letterIntensity * 3})
-                brightness(${0.5 + letterEnergy * 1.5})
+                hue-rotate(${letterIntensity * 180}deg)
+                saturate(${1 + letterIntensity * 1.5})
+                brightness(${0.7 + letterEnergy * 0.8})
             `;
         });
         
-        // CRAZY animate container based on rhythm speed
+        // Moderate animate container based on rhythm speed
         this.container.style.transform = `
-            scale(${0.8 + rhythmSpeed * 0.05 + Math.sin(currentTime * 8) * 0.3}) 
-            rotate(${rhythmSpeed * 0.8 + Math.cos(currentTime * 12) * 45}deg)
-            translateX(${Math.sin(currentTime * 6) * intensity * 50}px)
-            translateY(${Math.cos(currentTime * 9) * intensity * 30}px)
+            scale(${0.9 + rhythmSpeed * 0.02 + Math.sin(currentTime * 4) * 0.1}) 
+            rotate(${rhythmSpeed * 0.3 + Math.cos(currentTime * 6) * 15}deg)
+            translateX(${Math.sin(currentTime * 3) * intensity * 20}px)
+            translateY(${Math.cos(currentTime * 4) * intensity * 15}px)
         `;
         
-        // INSANE background color changes
-        const hue = (intensity * 720 + this.audioPlayer.currentTime * 200 + Math.sin(currentTime * 15) * 180) % 360;
-        const saturation = 80 + intensity * 20 + Math.sin(currentTime * 10) * 20;
-        const lightness = 20 + intensity * 30 + Math.cos(currentTime * 8) * 20;
+        // Moderate background color changes
+        const hue = (intensity * 360 + this.audioPlayer.currentTime * 100 + Math.sin(currentTime * 8) * 90) % 360;
+        const saturation = 60 + intensity * 15 + Math.sin(currentTime * 5) * 15;
+        const lightness = 30 + intensity * 20 + Math.cos(currentTime * 4) * 15;
         document.body.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         
-        // Add CRAZY background effects
+        // Add moderate background effects
         document.body.style.background = `
-            radial-gradient(circle at ${50 + Math.sin(currentTime * 5) * 30}% ${50 + Math.cos(currentTime * 7) * 30}%, 
-                hsl(${(hue + 120) % 360}, ${saturation}%, ${lightness}%), 
+            radial-gradient(circle at ${50 + Math.sin(currentTime * 3) * 15}% ${50 + Math.cos(currentTime * 4) * 15}%, 
+                hsl(${(hue + 60) % 360}, ${saturation}%, ${lightness}%), 
                 hsl(${hue}, ${saturation}%, ${lightness}%))
         `;
     }
