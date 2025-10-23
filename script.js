@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             letter.textContent = textContent[i];
             letter.classList.add('audio-letter');
             letter.style.position = 'absolute';
-            // Position each letter individually with specific X values, centered
-            letter.style.left = `${300 + (i * 50)}px`; // Centered starting position, each letter 50px more than the last
+            // Position each letter individually with specific X values, moved left
+            letter.style.left = `${150 + (i * 50)}px`; // Moved left starting position, each letter 50px more than the last
             letter.style.top = `50%`; // Fixed vertical position
             letter.style.fontSize = `${3.5}rem`; // Consistent size
             letter.style.zIndex = 10 + i;
