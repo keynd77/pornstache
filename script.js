@@ -41,15 +41,15 @@ document.addEventListener('DOMContentLoaded', function() {
             letter.textContent = textContent[i];
             letter.classList.add('audio-letter');
             letter.style.position = 'absolute';
-            // Create proper gaps between letters - each letter gets its own space
-            letter.style.left = `${15 + (i * 8)}%`; // Much wider spacing to prevent overlap
-            letter.style.top = `${50}%`; // Fixed vertical position
+            // Position each letter individually using transforms
+            letter.style.left = `50%`; // Start from center
+            letter.style.top = `50%`; // Start from center
             letter.style.fontSize = `${3.5}rem`; // Consistent size
             letter.style.zIndex = 10 + i;
             letter.style.width = `60px`; // Give each letter its own width
             letter.style.textAlign = `center`; // Center each letter in its space
-            // No initial transform - letters start in readable order
-            letter.style.transform = `translate(0, 0)`;
+            // Position each letter individually using translateX
+            letter.style.transform = `translateX(${(i - 4.5) * 80}px) translateY(0px)`; // Spread letters horizontally
             text.appendChild(letter);
         }
         
