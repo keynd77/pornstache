@@ -40,18 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const letter = document.createElement('span');
             letter.textContent = textContent[i];
             letter.classList.add('audio-letter');
-            letter.style.position = 'fixed'; // Use fixed positioning for full screen spread
-            // Much more diverse positioning across the entire screen
-            letter.style.left = `${10 + Math.random() * 80}%`; // Random horizontal spread
-            letter.style.top = `${10 + Math.random() * 80}%`; // Random vertical spread
-            letter.style.fontSize = `${2 + Math.random() * 4}rem`; // More size variation
+            letter.style.position = 'absolute';
+            // Keep letters in a more organized horizontal line with some spread
+            letter.style.left = `${25 + (i * 8)}%`; // Organized horizontal spacing
+            letter.style.top = `${45 + Math.random() * 10}%`; // Small vertical variation
+            letter.style.fontSize = `${3 + Math.random() * 1}rem`; // Less size variation
             letter.style.zIndex = 10 + i;
-            // Add initial random rotation, scale, and position offset
+            // Add subtle initial rotation and scale
             letter.style.transform = `
-                rotate(${Math.random() * 360}deg) 
-                scale(${0.3 + Math.random() * 1.5})
-                translateX(${Math.random() * 200 - 100}px)
-                translateY(${Math.random() * 200 - 100}px)
+                rotate(${Math.random() * 20 - 10}deg) 
+                scale(${0.8 + Math.random() * 0.4})
             `;
             text.appendChild(letter);
         }
@@ -193,7 +191,7 @@ class AudioSync {
             blur(${intensity * 0.5}px)
         `;
         
-        // Optimized animate each letter individually to the beat
+        // Organized animate each letter individually to the beat while keeping readability
         const letters = this.text.querySelectorAll('.audio-letter');
         letters.forEach((letter, index) => {
             // Pre-calculate values to reduce computation
@@ -201,18 +199,18 @@ class AudioSync {
             const letterEnergy = energy * (0.6 + index * 0.05);
             const timeOffset = currentTime + index * 0.5;
             
-            // Simplified movement patterns for better performance
-            const beatWave = Math.sin(timeOffset * 6) * letterIntensity * 80;
-            const beatBounce = Math.cos(timeOffset * 8) * letterEnergy * 60;
-            const beatSway = Math.sin(timeOffset * 4) * letterIntensity * 100;
-            const beatSpin = Math.cos(timeOffset * 10) * letterIntensity * 180;
-            const beatPulse = Math.sin(timeOffset * 12) * letterIntensity * 0.5;
+            // Organized movement patterns that keep letters readable
+            const beatWave = Math.sin(timeOffset * 6) * letterIntensity * 40; // Reduced movement
+            const beatBounce = Math.cos(timeOffset * 8) * letterEnergy * 30; // Reduced bounce
+            const beatSway = Math.sin(timeOffset * 4) * letterIntensity * 50; // Reduced sway
+            const beatSpin = Math.cos(timeOffset * 10) * letterIntensity * 45; // Reduced rotation
+            const beatPulse = Math.sin(timeOffset * 12) * letterIntensity * 0.3; // Reduced pulse
             
-            // Optimized transform with fewer calculations
+            // Organized transform that maintains word structure
             letter.style.transform = `
-                scale(${0.5 + letterIntensity * 1.5 + beatPulse}) 
-                rotate(${letterIntensity * 180 + beatSpin}deg)
-                translateY(${-letterEnergy * 100 + beatWave + beatBounce}px)
+                scale(${0.7 + letterIntensity * 0.8 + beatPulse}) 
+                rotate(${letterIntensity * 45 + beatSpin}deg)
+                translateY(${-letterEnergy * 50 + beatWave + beatBounce}px)
                 translateX(${beatSway}px)
             `;
             
