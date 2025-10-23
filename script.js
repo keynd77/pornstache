@@ -75,19 +75,32 @@ document.addEventListener('DOMContentLoaded', function() {
             audioSync = null;
         }
         
-        // Reset image
+        // Reset image completely
         image.style.transform = '';
         image.style.filter = '';
+        image.style.animation = '';
         
-        // Reset text
+        // Reset text completely - restore original text content
         text.innerHTML = originalElements.text.textContent;
         text.style.transform = '';
+        text.style.animation = '';
         
-        // Reset container
+        // Reset container completely
         container.style.transform = '';
+        container.style.animation = '';
         
-        // Reset background
+        // Reset background completely
         document.body.style.backgroundColor = 'white';
+        document.body.style.background = '';
+        
+        // Remove any disco classes that might have been added
+        document.body.classList.remove('disco-background');
+        container.classList.remove('disco-container');
+        image.classList.remove('disco-image');
+        
+        // Reset any letter elements that might still exist
+        const remainingLetters = document.querySelectorAll('.audio-letter');
+        remainingLetters.forEach(letter => letter.remove());
     }
     
 });
@@ -126,6 +139,7 @@ class AudioSync {
             this.animateToBeat(beat);
         }
         
+        // Use requestAnimationFrame for smooth 60fps animation
         this.animationId = requestAnimationFrame(() => this.animate());
     }
     
@@ -179,54 +193,44 @@ class AudioSync {
             blur(${intensity * 0.5}px)
         `;
         
-        // EXTREME animate each letter individually to the beat with full screen movement
+        // Optimized animate each letter individually to the beat
         const letters = this.text.querySelectorAll('.audio-letter');
         letters.forEach((letter, index) => {
-            const letterIntensity = intensity * (0.3 + Math.random() * 1.4);
-            const letterEnergy = energy * (0.4 + Math.random() * 1.2);
-            const letterBpm = bpm * (0.5 + Math.random() * 1.0);
+            // Pre-calculate values to reduce computation
+            const letterIntensity = intensity * (0.5 + index * 0.1);
+            const letterEnergy = energy * (0.6 + index * 0.05);
+            const timeOffset = currentTime + index * 0.5;
             
-            // Create EXTREME movement patterns that use the full screen
-            const beatWave = Math.sin(currentTime * (4 + index * 1.2)) * letterIntensity * 150;
-            const beatBounce = Math.cos(currentTime * (6 + index * 1.8)) * letterEnergy * 120;
-            const beatSway = Math.sin(currentTime * letterBpm * 0.2) * letterIntensity * 200;
-            const beatSpin = Math.cos(currentTime * (8 + index * 2.5)) * letterIntensity * 720;
-            const beatPulse = Math.sin(currentTime * (8 + index * 1.5)) * letterIntensity * 1.5;
-            const beatWiggle = Math.sin(currentTime * (12 + index * 3)) * letterIntensity * 100;
-            const beatFloat = Math.cos(currentTime * (10 + index * 2.2)) * letterEnergy * 80;
+            // Simplified movement patterns for better performance
+            const beatWave = Math.sin(timeOffset * 6) * letterIntensity * 80;
+            const beatBounce = Math.cos(timeOffset * 8) * letterEnergy * 60;
+            const beatSway = Math.sin(timeOffset * 4) * letterIntensity * 100;
+            const beatSpin = Math.cos(timeOffset * 10) * letterIntensity * 180;
+            const beatPulse = Math.sin(timeOffset * 12) * letterIntensity * 0.5;
             
-            // EXTREME individual letter animation with full screen movement
+            // Optimized transform with fewer calculations
             letter.style.transform = `
-                scale(${0.2 + letterIntensity * 2.5 + beatPulse}) 
-                rotate(${letterIntensity * 720 + beatSpin}deg)
-                translateY(${-letterEnergy * 200 + beatWave + beatBounce + beatFloat}px)
-                translateX(${beatSway + beatWiggle + Math.sin(currentTime * 3 + index) * letterIntensity * 150}px)
-                skew(${Math.sin(currentTime * 6 + index) * letterIntensity * 45}deg, ${Math.cos(currentTime * 5 + index) * letterIntensity * 35}deg)
+                scale(${0.5 + letterIntensity * 1.5 + beatPulse}) 
+                rotate(${letterIntensity * 180 + beatSpin}deg)
+                translateY(${-letterEnergy * 100 + beatWave + beatBounce}px)
+                translateX(${beatSway}px)
             `;
             
-            // EXTREME individual letter colors and effects that react dramatically to the beat
-            const beatHue = Math.sin(currentTime * (20 + index * 3)) * 120;
-            const beatSaturation = Math.sin(currentTime * (18 + index * 2)) * letterIntensity * 40;
-            const beatBrightness = Math.cos(currentTime * (16 + index * 2.5)) * letterEnergy * 30;
-            const letterHue = (colorIntensity + index * 60 + currentTime * 120 + beatHue) % 360;
-            const letterSaturation = 80 + letterIntensity * 30 + beatSaturation;
-            const letterLightness = 25 + letterEnergy * 40 + beatBrightness;
+            // Optimized individual letter colors and effects
+            const letterHue = (colorIntensity + index * 45 + currentTime * 60) % 360;
+            const letterSaturation = 70 + letterIntensity * 20;
+            const letterLightness = 40 + letterEnergy * 25;
             
             letter.style.color = `hsl(${letterHue}, ${letterSaturation}%, ${letterLightness}%)`;
             letter.style.textShadow = `
-                0 0 ${20 + letterIntensity * 50}px hsl(${letterHue}, 100%, 90%),
-                0 0 ${35 + letterIntensity * 60}px hsl(${(letterHue + 120) % 360}, 100%, 70%),
-                0 0 ${50 + letterIntensity * 70}px hsl(${(letterHue + 240) % 360}, 100%, 50%),
-                0 0 ${65 + letterIntensity * 80}px hsl(${(letterHue + 180) % 360}, 100%, 30%),
-                0 0 ${80 + letterIntensity * 90}px hsl(${(letterHue + 60) % 360}, 100%, 10%)
+                0 0 ${15 + letterIntensity * 25}px hsl(${letterHue}, 100%, 80%),
+                0 0 ${25 + letterIntensity * 35}px hsl(${(letterHue + 120) % 360}, 100%, 60%),
+                0 0 ${35 + letterIntensity * 45}px hsl(${(letterHue + 240) % 360}, 100%, 40%)
             `;
             letter.style.filter = `
-                hue-rotate(${letterIntensity * 360 + beatHue}deg)
-                saturate(${1.5 + letterIntensity * 3})
-                brightness(${0.4 + letterEnergy * 1.8})
-                contrast(${1.2 + letterIntensity * 0.8})
-                blur(${letterIntensity * 1}px)
-                drop-shadow(0 0 ${10 + letterIntensity * 20}px hsl(${letterHue}, 100%, 50%))
+                hue-rotate(${letterIntensity * 180}deg)
+                saturate(${1.2 + letterIntensity * 1.5})
+                brightness(${0.7 + letterEnergy * 0.8})
             `;
         });
         
@@ -238,17 +242,10 @@ class AudioSync {
             translateY(${Math.cos(currentTime * 4) * intensity * 15}px)
         `;
         
-        // Moderate background color changes
-        const hue = (intensity * 360 + this.audioPlayer.currentTime * 100 + Math.sin(currentTime * 8) * 90) % 360;
-        const saturation = 60 + intensity * 15 + Math.sin(currentTime * 5) * 15;
-        const lightness = 30 + intensity * 20 + Math.cos(currentTime * 4) * 15;
+        // Optimized background color changes
+        const hue = (intensity * 180 + currentTime * 50) % 360;
+        const saturation = 50 + intensity * 20;
+        const lightness = 40 + intensity * 15;
         document.body.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        
-        // Add moderate background effects
-        document.body.style.background = `
-            radial-gradient(circle at ${50 + Math.sin(currentTime * 3) * 15}% ${50 + Math.cos(currentTime * 4) * 15}%, 
-                hsl(${(hue + 60) % 360}, ${saturation}%, ${lightness}%), 
-                hsl(${hue}, ${saturation}%, ${lightness}%))
-        `;
     }
 }
