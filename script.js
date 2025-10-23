@@ -231,11 +231,11 @@ class AudioSync {
             `;
         });
         
-        // Moderate animate container based on rhythm speed
+        // Moderate animate container based on rhythm speed with responsive positioning
         this.container.style.transform = `
             scale(${0.9 + rhythmSpeed * 0.02 + Math.sin(currentTime * 4) * 0.1}) 
             rotate(${rhythmSpeed * 0.3 + Math.cos(currentTime * 6) * 15}deg)
-            translateX(${Math.sin(currentTime * 3) * intensity * 20}px)
+            translateX(${-50 + Math.sin(currentTime * 3) * intensity * 20}%)
             translateY(${Math.cos(currentTime * 4) * intensity * 15}px)
         `;
         
